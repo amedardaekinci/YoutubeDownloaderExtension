@@ -4,7 +4,10 @@ services:
   - type: web
     name: youtube-downloader-api
     env: node
-    buildCommand: npm install
+    buildCommand: |
+      curl -L https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -o yt-dlp
+      chmod a+rx yt-dlp
+      npm install
     startCommand: npm start
     envVars:
       - key: NODE_ENV
