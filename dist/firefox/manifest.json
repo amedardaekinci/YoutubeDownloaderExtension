@@ -1,0 +1,39 @@
+{
+  "manifest_version": 2,
+  "name": "YouTube Video Downloader",
+  "version": "1.0",
+  "description": "Download YouTube videos in MP4 or MP3 format",
+  "permissions": [
+    "downloads",
+    "tabs",
+    "activeTab",
+    "*://*.youtube.com/*",
+    "http://localhost:3000/*"
+  ],
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*.youtube.com/*"],
+      "js": ["content.js"]
+    }
+  ],
+  "browser_action": {
+    "default_icon": "logomuz.png",
+    "default_popup": "popup.html"
+  },
+  "icons": {
+    "48": "logomuz.png",
+    "128": "logomuz.png"
+  },
+  "web_accessible_resources": ["*"],
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'; media-src 'self' blob: filesystem: data:",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "{youtube-downloader@arda.eth}",
+      "strict_min_version": "57.0"
+    }
+  }
+} 
