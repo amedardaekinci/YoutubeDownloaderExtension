@@ -2,9 +2,7 @@
 const browserAPI = typeof browser !== 'undefined' ? browser : chrome;
 
 // API URL'si
-const API_URL = process.env.NODE_ENV === 'production' 
-  ? 'https://youtubedownloaderextension.onrender.com'
-  : 'http://localhost:3000';
+const API_URL = 'https://youtubedownloaderextension.onrender.com';
 
 // Mesaj dinleyicisi
 browserAPI.runtime.onMessage.addListener((message, sender, sendResponse) => {
