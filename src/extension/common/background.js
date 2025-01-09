@@ -27,16 +27,16 @@ async function handleDownload(videoInfo, format) {
   try {
     const videoUrl = `https://www.youtube.com/watch?v=${videoInfo.videoId}`;
     
-    // İndirme endpoint'ini seç
-    const endpoint = format === 'mp3' ? '/api/download-audio' : '/api/download-video';
-    
     // İndirme isteği gönder
-    const response = await fetch(`${API_URL}${endpoint}`, {
+    const response = await fetch(`${API_URL}/download`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ url: videoUrl })
+      body: JSON.stringify({ 
+        url: videoUrl,
+        format: format 
+      })
     });
 
     if (!response.ok) {
@@ -48,8 +48,8 @@ async function handleDownload(videoInfo, format) {
     
     // Dosyayı indir
     return browserAPI.downloads.download({
-      url: `${API_URL}${data.downloadUrl}`,
-      filename: `${sanitizeFilename(data.title)}.${format === 'mp3' ? 'm4a' : 'mp4'}`,
+      url: data.downloadUrl,
+      filename: `${sanitizeFilename(videoInfo.title)}.${format === 'mp3' ? 'mp3' : 'mp4'}`,
       saveAs: true
     });
 

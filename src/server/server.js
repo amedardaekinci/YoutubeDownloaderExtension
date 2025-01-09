@@ -21,15 +21,9 @@ app.use(limiter);
 
 // CORS ve body-parser ayarları
 app.use(cors({
-  origin: [
-    'chrome-extension://*', 
-    'moz-extension://*', 
-    'http://localhost:3000',
-    'https://*.onrender.com',
-    process.env.FRONTEND_URL // Frontend URL'i için
-  ].filter(Boolean),
-  methods: ['GET', 'POST'],
-  allowedHeaders: ['Content-Type'],
+  origin: '*',  // Tüm originlere izin ver
+  methods: ['GET', 'POST', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Origin', 'Accept'],
   credentials: true
 }));
 app.use(bodyParser.json());
