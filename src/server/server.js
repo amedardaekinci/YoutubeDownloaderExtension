@@ -4,11 +4,34 @@ const bodyParser = require('body-parser');
 const { exec } = require('child_process');
 const fs = require('fs');
 const path = require('path');
+const rateLimit = require('express-rate-limit');
+const helmet = require('helmet');
 
 const app = express();
 
+// Güvenlik ayarları
+app.use(helmet());
+
+// Rate limiting
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 dakika
+  max: 100 // her IP için limit
+});
+app.use(limiter);
+
 // CORS ve body-parser ayarları
-app.use(cors());
+app.use(cors({
+  origin: [
+    'chrome-extension://*', 
+    'moz-extension://*', 
+    'http://localhost:3000',
+    'https://*.onrender.com',
+    process.env.FRONTEND_URL // Frontend URL'i için
+  ].filter(Boolean),
+  methods: ['GET', 'POST'],
+  allowedHeaders: ['Content-Type'],
+  credentials: true
+}));
 app.use(bodyParser.json());
 
 // Downloads klasörü

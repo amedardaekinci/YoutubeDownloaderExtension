@@ -1,40 +1,10 @@
-# Dependencies
 node_modules/
-package-lock.json
-
-# Build outputs
-dist/
-build/
-*.zip
-
-# Environment variables
 .env
 .env.local
-.env.*.local
-.env.production
-
-# IDE specific files
-.idea/
-.vscode/
-*.swp
-*.swo
-
-# OS specific files
 .DS_Store
-Thumbs.db
-
-# Logs
+dist/
+downloads/
 *.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-
-# Downloaded files
-downloads/
-src/server/downloads/
-
-# Test coverage
-coverage/
-
-# Railway specific
-.railway/

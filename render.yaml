@@ -2,13 +2,13 @@
 
 services:
   - type: web
-    name: youtube-downloader
+    name: youtube-downloader-api
     env: node
-    plan: free
     buildCommand: npm install
-    startCommand: bash scripts/start-production.sh
+    startCommand: npm start
     envVars:
       - key: NODE_ENV
         value: production
-    healthCheckPath: /
-    autoDeploy: true
+      - key: PORT
+        value: 10000
+    healthCheckPath: /health
