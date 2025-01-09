@@ -70,8 +70,13 @@ app.post('/download', async (req, res) => {
     });
 });
 
-// Render'ın atadığı portu veya varsayılan portu kullan
-const PORT = process.env.PORT || 10000;
+// Root endpoint'i ekle
+app.get('/', (req, res) => {
+    res.send('YouTube Downloader API is running');
+});
+
+// Render'ın atadığı portu kullan
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 }); 
