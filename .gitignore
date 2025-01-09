@@ -2,8 +2,7 @@ node_modules/
 .env
 .env.local
 .DS_Store
-dist/
-downloads/
+dist/server/downloads/
 *.log
 npm-debug.log*
 yarn-debug.log*
