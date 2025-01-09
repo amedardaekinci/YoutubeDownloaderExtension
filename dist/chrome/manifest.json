@@ -1,40 +1,30 @@
 {
   "manifest_version": 3,
   "name": "YouTube Video Downloader",
-  "version": "1.0",
-  "description": "Download YouTube videos in MP4 or MP3 format",
+  "version": "1.0.0",
+  "description": "Download YouTube videos easily",
   "permissions": [
-    "downloads",
-    "tabs",
     "activeTab",
-    "scripting"
+    "downloads",
+    "storage"
   ],
   "host_permissions": [
-    "*://*.youtube.com/*",
-    "http://localhost:3000/*"
+    "*://*.youtube.com/*"
   ],
-  "background": {
-    "service_worker": "background.js"
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_icon": "assets/icons/logomuz.ico"
+  },
+  "icons": {
+    "128": "assets/icons/logomuz.ico"
   },
   "content_scripts": [
     {
       "matches": ["*://*.youtube.com/*"],
-      "js": ["content.js"]
+      "js": ["content/content.js"]
     }
   ],
-  "action": {
-    "default_icon": "logomuz.png",
-    "default_popup": "popup.html"
-  },
-  "icons": {
-    "48": "logomuz.png",
-    "128": "logomuz.png"
-  },
-  "web_accessible_resources": [{
-    "resources": ["*"],
-    "matches": ["<all_urls>"]
-  }],
-  "content_security_policy": {
-    "extension_pages": "script-src 'self'; object-src 'self'; media-src 'self' blob: filesystem: data:"
+  "background": {
+    "service_worker": "common/background.js"
   }
 } 
