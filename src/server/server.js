@@ -26,32 +26,43 @@ app.post('/download', async (req, res) => {
     }
 
     const outputPath = path.join(downloadsDir, `video_${Date.now()}`);
+    const ytDlpPath = path.join(process.cwd(), 'yt-dlp');
     let command;
 
     if (format === 'mp3') {
-        command = `yt-dlp -x --audio-format mp3 -o "${outputPath}.%(ext)s" ${url}`;
+        command = `${ytDlpPath} -x --audio-format mp3 -o "${outputPath}.%(ext)s" ${url}`;
     } else {
-        command = `yt-dlp -f "bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best" -o "${outputPath}.%(ext)s" ${url}`;
+        command = `${ytDlpPath} -f "bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best" -o "${outputPath}.%(ext)s" ${url}`;
     }
+
+    console.log('Executing command:', command);
 
     exec(command, (error, stdout, stderr) => {
         if (error) {
             console.error(`Error: ${error}`);
-            return res.status(500).json({ error: 'Download failed' });
+            console.error(`stderr: ${stderr}`);
+            return res.status(500).json({ error: 'Download failed', details: error.message });
         }
+
+        console.log(`stdout: ${stdout}`);
 
         // Dosya adını bul
         fs.readdir(downloadsDir, (err, files) => {
             if (err) {
+                console.error(`Directory read error: ${err}`);
                 return res.status(500).json({ error: 'Could not read directory' });
             }
 
+            console.log('Files in directory:', files);
+
             const downloadedFile = files.find(file => file.startsWith(`video_${Date.now()}`));
             if (!downloadedFile) {
+                console.error('Downloaded file not found');
                 return res.status(404).json({ error: 'File not found' });
             }
 
             const filePath = path.join(downloadsDir, downloadedFile);
+            console.log('Sending file:', filePath);
             
             // Dosyayı gönder
             res.download(filePath, downloadedFile, (err) => {
@@ -76,7 +87,7 @@ app.get('/', (req, res) => {
 });
 
 // Render'ın atadığı portu kullan
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
+const PORT = process.env.PORT || 10000;
+app.listen(PORT, '0.0.0.0', () => {
     console.log(`Server running on port ${PORT}`);
 }); 
