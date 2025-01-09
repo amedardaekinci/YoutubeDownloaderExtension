@@ -10,7 +10,7 @@
   ],
   "host_permissions": [
     "*://*.youtube.com/*",
-    "https://youtube-downloader.onrender.com/*"
+    "https://youtube-downloader.onrender.com:10000/*"
   ],
   "action": {
     "default_popup": "popup/popup.html",

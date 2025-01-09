@@ -14,7 +14,7 @@
     "downloads",
     "storage",
     "*://*.youtube.com/*",
-    "https://youtube-downloader.onrender.com/*"
+    "https://youtube-downloader.onrender.com:10000/*"
   ],
   "browser_action": {
     "default_popup": "popup/popup.html",
